@@ -46,7 +46,7 @@
         <header id="header" class="header">
             <div class="header-menu">
                 <div class="page-title">
-                    <h1>Dashboard</h1>
+                    <h1>Dashboard user blm login</h1>
                 </div>
             </div>
         </header>
@@ -64,7 +64,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ $job->company_name }}</h5>
                                 <p class="card-text">{{ Str::limit($job->description, 100) }}</p>
-                                
+
                                 <a href="{{ route('userjobs.show', $job->id) }}" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
