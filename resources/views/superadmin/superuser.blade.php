@@ -1,99 +1,68 @@
-<!doctype html>
-<html class="no-js" lang="">
+@extends('layouts.superadmin')
+@section('content')
+<!-- Content -->
+<div id="right-panel" class="right-panel">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Super Users</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="content mt-2">
+        <div class="col-lg-10 mx-auto">
+            @if(session('success'))
+                <script>
+                    // Menampilkan alert success menggunakan confirm
+                    setTimeout(() => {
+                        alert("{{ session('success') }}");
+                    }); // Delay untuk memastikan halaman ter-render
+                </script>
+            @endif
+            <div class="alert alert-success text-center fw-semibold">User List</div> 
 
-    <!-- Bootstrap 5 CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+            <!-- Align 'Add User' button to the right -->
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ route('superusers.create') }}" class="btn btn-light text-success fw-bold">
+                    <i class="bi bi-plus-circle me-2"></i> Add User
+                </a>
+            </div>
 
-    <!-- Optional: File CSS Custom -->
-    <link rel="stylesheet" href="{{ asset('assets/scss/style.css') }}">
-</head>
-
-<body>
-    <!-- Left Panel -->
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <h3 class="menu-title">Super Admin</h3>
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('dashboard') }}">Dashboard</a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('superjobs') }}">Jobs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('superapps') }}">Applicants</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url('superusers') }}">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                            <a class="nav-link" href="{{ url('/') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </aside>
-    
-        <!-- Content -->
-        <div id="right-panel" class="right-panel">
-            <header id="header" class="header">
-                <div class="header-menu">
-                    <div class="page-title"><h1>Super Users</h1></div>
-                    <div class="header-right">
-                        <a href="{{ route('superusers.create') }}" class="btn btn-primary">Add User</a>
-                    </div>
-                </div>
-            </header>
-            <div class="content mt-3">
-                <div class="col-sm-12">
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-                    <div class="alert alert-info">User  List</div>
-                    <table class="table table-striped">
-                        <thead>
+            <div class="table-responsive rounded shadow-sm mt-2">
+                <table class="table table-striped table-bordered table-hover align-middle">
+                    <thead class="bg-secondary text-white text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($users as $user)
                             <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Actions</th>
+                                <td class="text-center fw-semibold">{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td class="text-center">{{ ucfirst($user->role) }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('superusers.edit', $user->id) }}" class="btn btn-warning btn-sm me-1">
+                                        <i class="bi bi-pencil-fill"></i> Edit
+                                    </a>
+                                    <form action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        <a href="{{ route('superusers.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-    
-        <!-- Scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    
-    </html>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+@endsection
