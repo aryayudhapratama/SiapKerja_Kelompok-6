@@ -5,12 +5,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserJobController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AdminJobController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\SuperUserController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\SuperadminAppController;
 use App\Http\Controllers\SuperadminJobController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,18 +25,18 @@ use App\Http\Controllers\SuperadminJobController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Halaman Sebelum Login
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+Route::get('/detail/{id}', [WelcomeController::class, 'show'])->name('detail.show');
 
 // Dashboard untuk semua pengguna
 Route::get('/dashboard', function () {
     $role = auth()->user()->role;
 
     if ($role === 'user') {
-        return redirect()->route('user.dashboard');
+        return redirect()->route('userjobs.index');
     } elseif ($role === 'admin') {
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.index');
     } elseif ($role === 'superadmin') {
         return redirect()->route('superadmin.dashboard');
     }
@@ -44,11 +46,11 @@ Route::get('/dashboard', function () {
 
 // Route berdasarkan role
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/userjobs', [UserJobController::class, 'index'])->name('userjobs.index');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
@@ -85,7 +87,6 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::delete('/superapps/{id}', [SuperadminAppController::class, 'destroy'])->name('superapps.destroy');
 });
 
-// Route::resource('jobs', AdminJobController::class);
 // Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // AdminJob
@@ -110,6 +111,5 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/userjobs/{id}/create', [UserJobController::class, 'create'])->name('userjobs.create');
     Route::post('/userjobs/{id}/apply', [UserJobController::class, 'store'])->name('userjobs.store');
     Route::get('/history', [UserJobController::class, 'history'])->name('history');
-    // tralala
     Route::get('/userjobs/{id}', [UserController::class, 'show'])->name('userjobs.show');
 });

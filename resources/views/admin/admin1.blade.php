@@ -52,10 +52,13 @@
                         <a class="nav-link active" href="#hero">Dashboard</a>
                     </li>
                     <li><a href="#jobs">Jobs</a></li>
-                    <li><a href="#about">About</a></li>
                     <li>
-                        <a class="nav-link" href="{{ url('history') }}">History</a>
+                        <a class="nav-link" href="{{ url('adminjobs') }}">Add Jobs</a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('applicants') }}">Applicants</a>
+                    </li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -86,14 +89,13 @@
                             </div>
 
                             <h1 class="mb-4">
-                                TOP MARKOTOP<br>
+                                Siap Kerja<br>
                                 Perintis Bukan Pewaris <br>
-                                <span class="accent-text">Cah Kerjo Lek</span>
+                                <span class="accent-text">Cari Jalan Ninjamu</span>
                             </h1>
 
                             <p class="mb-4 mb-md-5">
-                                Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt.
-                                Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+                                SiapKerja adalah platform yang mempermudah pencari kerja menemukan lowongan dan perusahaan mencari kandidat pekerja terbaik.
                             </p>
 
                             <div class="hero-buttons">
@@ -166,7 +168,7 @@
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>Available Jobs</h2>
-                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+                <p>Cari jalan ninjamu dengan memilih daftar pekerjaan dibawah ini :</p>
             </div><!-- End Section Title -->
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -182,7 +184,7 @@
                                 <div>
                                     <h3>{{ $job->company_name }}</h3>
                                     <p>{{ Str::limit($job->description, 100) }}</p>
-                                    <a href="{{ route('userjobs1.show', $job->id) }}" class="read-more">View Details
+                                    <a href="{{ route('adminjobs.show', $job->id) }}" class="read-more">View Details
                                         <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -205,10 +207,12 @@
 
                     <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
                         <span class="about-meta">MORE ABOUT US</span>
-                        <h2 class="about-title">Voluptas enim suscipit temporibus</h2>
-                        <p class="about-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                            veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        <h2 class="about-title">Website SiapKerja</h2>
+                        <p class="about-description">SiapKerja adalah platform inovatif yang menghubungkan pencari kerja dengan perusahaan, memudahkan proses pencarian dan perekrutan. 
+                            Kami memahami tantangan yang dihadapi oleh kedua belah pihak, baik pencari kerja yang ingin menemukan peluang karir yang sesuai, maupun perusahaan yang mencari kandidat terbaik untuk posisi yang tersedia. 
+                            Dengan fitur pencarian lowongan yang mudah digunakan dan sistem pendaftaran yang efisien, SiapKerja memberikan pengalaman yang lebih cepat dan lebih baik dalam menemukan pekerjaan dan talent yang tepat. 
+                            Kami berkomitmen untuk menciptakan hubungan yang saling menguntungkan dan membantu membangun karir serta tim yang sukses.
+                        </p>
 
                         <div class="row feature-list-wrapper">
                             <div class="col-md-6">
@@ -319,7 +323,7 @@
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>Contact</h2>
-                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+                <p>Untuk pertanyaan atau informasi lebih lanjut, Anda dapat menghubungi kami pada kontak berikut :</p>
             </div><!-- End Section Title -->
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -328,8 +332,7 @@
                     <div class="col-lg-5">
                         <div class="info-box" data-aos="fade-up" data-aos-delay="200">
                             <h3>Contact Info</h3>
-                            <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante
-                                ipsum primis.</p>
+                            <p>Untuk pertanyaan atau informasi lebih lanjut, Anda dapat menghubungi kami pada kontak berikut :</p>
 
                             <div class="info-item" data-aos="fade-up" data-aos-delay="300">
                                 <div class="icon-box">

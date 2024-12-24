@@ -24,7 +24,7 @@
                 <p class="card-text"><strong>Category:</strong> {{ $job->category }}</p>
                 <p class="card-text"><strong>Posted on:</strong> {{ $job->created_at->format('d M Y') }}</p>
     
-                <a href="{{ route('admin.index') }}" class="btn btn-secondary">Back to Jobs</a>
+                <a href="{{ route('welcome.index') }}" class="btn btn-secondary">Back to Jobs</a>
             </div>
         </div>
     </div>
