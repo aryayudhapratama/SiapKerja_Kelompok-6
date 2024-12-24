@@ -10,6 +10,6 @@ class AdminController extends Controller
     {
         $jobs = \App\Models\AdminJob::all();
 
-        return view('admin.admin', compact('jobs'));
+        return view('admin.admin1', compact('jobs'));
     }
 }

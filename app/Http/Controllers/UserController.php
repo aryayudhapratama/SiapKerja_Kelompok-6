@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $jobs = \App\Models\AdminJob::all();
 
-        return view('user.user', compact('jobs'));
+        return view('user.userjobs', compact('jobs'));
     }
 
     /**
