@@ -174,8 +174,7 @@
                                 <div>
                                     <h3>{{ $job->company_name }}</h3>
                                     <p>{{ Str::limit($job->description, 100) }}</p>
-                                    <a href="{{ route('detail.show', $job->id) }}" class="read-more">View Details
-                                        <i class="bi bi-arrow-right"></i></a>
+                                    <a href="{{ route('detail.show', $job->id) }}" class="read-more">View Details<i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
