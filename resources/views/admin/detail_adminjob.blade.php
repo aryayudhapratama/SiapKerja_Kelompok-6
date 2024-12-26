@@ -47,14 +47,27 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li>
-                        <a href="{{ route('userjobs.index') }}#hero">Dashboard</a>
+                        {{-- <a class="nav-link active" href="">Dashboard</a> --}}
+                        <a href="{{ route('admin.index') }}#hero" class="nav-link active">Dashboard</a>
                     </li>
-                    <li><a href="{{ route('userjobs.index') }}#jobs" class="nav-link active">Jobs</a></li>
-                    <li><a href="{{ route('userjobs.index') }}#about">About</a></li>
                     <li>
-                        <a class="nav-link" href="{{ url('history') }}">History</a>
+                        {{-- <a href="#jobs">Jobs</a> --}}
+                        <a href="{{ route('admin.index') }}#jobs" class="nav-link active">Jobs</a>
                     </li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        {{-- <a href="#about">About</a> --}}
+                        <a href="{{ route('admin.index') }}#about" class="nav-link active">About</a>
+                    </li>
+                    <li>
+                        {{-- <a href="#contact">Contact</a> --}}
+                        <a href="{{ route('admin.index') }}#contact" class="nav-link active">Contact</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('adminjobs') }}">Add Jobs</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('applicants') }}">Applicants</a>
+                    </li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
