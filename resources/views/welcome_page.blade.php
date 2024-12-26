@@ -41,8 +41,6 @@
             class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
             <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">SiapKerja</h1>
             </a>
 
@@ -55,11 +53,11 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a class="btn-getstarted nav-link" href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Login</a></li>
-                    <li><a class="btn-getstarted nav-link" href="{{ route('register') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Registrasi</a></li>
+                    <li><a class="btn-getstarteds nav-link" href="{{ route('register') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Register</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            
+
         </div>
     </header>
 
@@ -198,9 +196,9 @@
                     <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
                         <span class="about-meta">MORE ABOUT US</span>
                         <h2 class="about-title">Website SiapKerja</h2>
-                        <p class="about-description">SiapKerja adalah platform inovatif yang menghubungkan pencari kerja dengan perusahaan, memudahkan proses pencarian dan perekrutan. 
-                            Kami memahami tantangan yang dihadapi oleh kedua belah pihak, baik pencari kerja yang ingin menemukan peluang karir yang sesuai, maupun perusahaan yang mencari kandidat terbaik untuk posisi yang tersedia. 
-                            Dengan fitur pencarian lowongan yang mudah digunakan dan sistem pendaftaran yang efisien, SiapKerja memberikan pengalaman yang lebih cepat dan lebih baik dalam menemukan pekerjaan dan talent yang tepat. 
+                        <p class="about-description">SiapKerja adalah platform inovatif yang menghubungkan pencari kerja dengan perusahaan, memudahkan proses pencarian dan perekrutan.
+                            Kami memahami tantangan yang dihadapi oleh kedua belah pihak, baik pencari kerja yang ingin menemukan peluang karir yang sesuai, maupun perusahaan yang mencari kandidat terbaik untuk posisi yang tersedia.
+                            Dengan fitur pencarian lowongan yang mudah digunakan dan sistem pendaftaran yang efisien, SiapKerja memberikan pengalaman yang lebih cepat dan lebih baik dalam menemukan pekerjaan dan talent yang tepat.
                             Kami berkomitmen untuk menciptakan hubungan yang saling menguntungkan dan membantu membangun karir serta tim yang sukses.
                         </p>
 
