@@ -61,7 +61,6 @@
             </a>
         </div>
     </header>
-    </header>
     <!-- End Header -->
 
     <!-- Main Section -->
