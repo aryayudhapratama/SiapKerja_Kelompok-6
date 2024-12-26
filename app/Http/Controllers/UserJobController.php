@@ -26,7 +26,7 @@ class UserJobController extends Controller
      */
     public function create($id)
     {
-        $job = \App\Models\AdminJob::findOrFail($id); 
+        $job = \App\Models\AdminJob::findOrFail($id);
 
         return view('user.create_userjob', compact('job'));
     }
@@ -68,9 +68,9 @@ class UserJobController extends Controller
      */
     public function show($id)
     {
-        $job = \App\Models\AdminJob::findOrFail($id); 
+        $job = \App\Models\AdminJob::findOrFail($id);
 
-        return view('user.detail_userjob', compact('job')); 
+        return view('user.detail_userjob', compact('job'));
     }
 
     public function history()

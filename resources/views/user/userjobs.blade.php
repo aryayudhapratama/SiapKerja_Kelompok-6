@@ -25,13 +25,6 @@
     <!-- Main CSS File -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
-    <!-- =======================================================
-  * Template Name: iLanding
-  * Template URL: https://bootstrapmade.com/ilanding-bootstrap-landing-page-template/
-  * Updated: Nov 12 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page">
@@ -41,8 +34,6 @@
             class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
             <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">SiapKerja</h1>
             </a>
 
