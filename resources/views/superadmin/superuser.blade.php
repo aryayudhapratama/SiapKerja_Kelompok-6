@@ -1,99 +1,183 @@
-<!doctype html>
-<html class="no-js" lang="">
+@extends('layouts.superadmin')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Super Users</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap 5 CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <!-- Optional: File CSS Custom -->
-    <link rel="stylesheet" href="{{ asset('assets/scss/style.css') }}">
-</head>
-
-<body>
-    <!-- Left Panel -->
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <h3 class="menu-title">Super Admin</h3>
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('dashboard') }}">Dashboard</a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('superjobs') }}">Jobs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('superapps') }}">Applicants</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url('superusers') }}">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                            <a class="nav-link" href="{{ url('/') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </aside>
-    
-        <!-- Content -->
-        <div id="right-panel" class="right-panel">
-            <header id="header" class="header">
-                <div class="header-menu">
-                    <div class="page-title"><h1>Super Users</h1></div>
-                    <div class="header-right">
-                        <a href="{{ route('superusers.create') }}" class="btn btn-primary">Add User</a>
-                    </div>
-                </div>
-            </header>
-            <div class="content mt-3">
-                <div class="col-sm-12">
-                    @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-                    <div class="alert alert-info">User  List</div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        <a href="{{ route('superusers.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+@section('content')
+<div class="container" style="margin-top:4%">
+    <header id="header" class="header">
+        <div class="header-menu">
+            <div class="header-right ms-auto">
+                <button id="add-user-btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add User</button>
             </div>
         </div>
-    
-        <!-- Scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    
-    </html>
+    </header>
+    <div class="table-responsive">
+    <div class="content mt-1">
+        <table class="table table-hover table-striped align-middle">
+        <thead class="table-success">
+                <tr style="text-align:center">
+                    <th style="text-align:center">ID</th>
+                    <th style="text-align:center">Name</th>
+                    <th style="text-align:center">Email</th>
+                    <th style="text-align:center">Role</th>
+                    <th style="text-align:center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                    <tr>
+                        <td style="text-align:center">{{ $user->id }}</td>
+                        <td style="text-align:center">{{ $user->name }}</td>
+                        <td style="text-align:center">{{ $user->email }}</td>
+                        <td style="text-align:center">{{ $user->role }}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm edit-btn" 
+                                data-id="{{ $user->id }}" 
+                                data-name="{{ $user->name }}" 
+                                data-email="{{ $user->email }}" 
+                                data-role="{{ $user->role }}">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </button>
+                            
+                            <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->id }}">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                            <form id="delete-form-{{ $user->id }}" action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Add User Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('superusers.store') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="add-name" class="form-label">Name:</label>
+                        <input type="text" id="add-name" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-email" class="form-label">Email:</label>
+                        <input type="email" id="add-email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-role" class="form-label">Role:</label>
+                        <select id="add-role" name="role" class="form-select" required>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                            <option value="superadmin">SuperAdmin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-password" class="form-label">Password:</label>
+                        <input type="password" id="add-password" name="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-password_confirmation" class="form-label">Confirm Password:</label>
+                        <input type="password" id="add-password_confirmation" name="password_confirmation" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editForm" action="" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-id" name="id">
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Name:</label>
+                        <input type="text" id="edit-name" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-email" class="form-label">Email:</label>
+                        <input type="email" id="edit-email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-role" class="form-label">Role:</label>
+                        <select id="edit-role" name="role" class="form-select" required>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                            <option value="superadmin">SuperAdmin</option> 
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-password" class="form-label">New Password (Leave blank to keep unchanged):</label>
+                        <input type="password" id="edit-password" name="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-password_confirmation" class="form-label">Confirm Password:</label>
+                        <input type="password" id="edit-password_confirmation" name="password_confirmation" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.querySelectorAll('.edit-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const userId = this.dataset.id;
+        const actionUrl = `/superusers/${userId}`;  // Ubah '/users' menjadi '/superusers'
+        document.getElementById('editForm').action = actionUrl;
+        document.getElementById('edit-id').value = this.dataset.id;
+        document.getElementById('edit-name').value = this.dataset.name;
+        document.getElementById('edit-email').value = this.dataset.email;
+        document.getElementById('edit-role').value = this.dataset.role;
+
+        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+        editModal.show();
+    });
+});
+
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${id}`).submit();
+                    }
+                });
+            });
+        });
+</script>
+@endsection
