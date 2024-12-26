@@ -52,14 +52,14 @@
                         <a class="nav-link active" href="#hero">Dashboard</a>
                     </li>
                     <li><a href="#jobs">Jobs</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li>
                         <a class="nav-link" href="{{ url('adminjobs') }}">Add Jobs</a>
                     </li>
                     <li>
                         <a class="nav-link" href="{{ url('applicants') }}">Applicants</a>
                     </li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>

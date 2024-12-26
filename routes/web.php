@@ -25,6 +25,10 @@ use App\Http\Controllers\SuperadminJobController;
 |
 */
 
+// Route::get('/hallo', function () {
+//     return view('admin.adminjobs1');
+// });
+
 // Halaman Sebelum Login
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::get('/detail/{id}', [WelcomeController::class, 'show'])->name('detail.show');
