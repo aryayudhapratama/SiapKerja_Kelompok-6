@@ -145,7 +145,7 @@
 
     <footer id="footer" class="footer">
 
-        {{-- <div class="container footer-top">
+        <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
@@ -204,7 +204,7 @@
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         <div class="container copyright text-center mt-4">
             <p>© <span>Copyright</span> <strong class="px-1 sitename">SiapKerja-Kelompok6</strong> <span>All Rights
