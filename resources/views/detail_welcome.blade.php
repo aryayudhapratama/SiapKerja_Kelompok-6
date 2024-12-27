@@ -35,74 +35,29 @@
 </head>
 
 <body class="index-page">
-    <!-- Header -->
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div
-            class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-                <h1 class="sitename">SiapKerja</h1>
-            </a>
-
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li>
-                        {{-- <a class="nav-link active" href="">Dashboard</a> --}}
-                        <a href="{{ route('admin.index') }}#hero" class="nav-link active">Dashboard</a>
-                    </li>
-                    <li>
-                        {{-- <a href="#jobs">Jobs</a> --}}
-                        <a href="{{ route('admin.index') }}#jobs" class="nav-link active">Jobs</a>
-                    </li>
-                    <li>
-                        {{-- <a href="#about">About</a> --}}
-                        <a href="{{ route('admin.index') }}#about" class="nav-link active">About</a>
-                    </li>
-                    <li>
-                        {{-- <a href="#contact">Contact</a> --}}
-                        <a href="{{ route('admin.index') }}#contact" class="nav-link active">Contact</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ url('adminjobs') }}">Add Jobs</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ url('applicants') }}">Applicants</a>
-                    </li>
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
-            <a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                <a class="btn-getstarted nav-link" href="{{ url('/') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-            </a>
-        </div>
-    </header>
 
     <main class="main">
-        
 
         <!-- Hero Section -->
         <section id="hero" class="hero section">
 
             <div class="container">
         <div class="card">
-            @if($job->picture)
-                <img src="{{ asset('storage/' . $job->picture) }}" class="card-img-top" alt="{{ $job->company_name }}" style="height: 500px; object-fit: cover;">
+            @if($jobs->picture)
+                <img src="{{ asset('storage/' . $jobs->picture) }}" class="card-img-top" alt="{{ $jobs->company_name }}" style="height: 800px; object-fit: cover;">
             @else
                 <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image" style="height: 300px; object-fit: cover;">
             @endif
     
             <div class="card-body">
-                <h3 class="card-title">{{ $job->company_name }}</h3>
-                <p class="card-text"><strong>Description:</strong> {{ $job->description }}</p>
-                <p class="card-text"><strong>Address:</strong> {{ $job->address }}</p>
-                <p class="card-text"><strong>Category:</strong> {{ $job->category }}</p>
-                <p class="card-text"><strong>Posted on:</strong> {{ $job->created_at->format('d M Y') }}</p>
+                <h3 class="card-title">{{ $jobs->company_name }}</h3>
+                <p class="card-text"><strong>Description:</strong> {{ $jobs->description }}</p>
+                <p class="card-text"><strong>Address:</strong> {{ $jobs->address }}</p>
+                <p class="card-text"><strong>Category:</strong> {{ $jobs->category }}</p>
+                <p class="card-text"><strong>Posted on:</strong> {{ $jobs->created_at->format('d M Y') }}</p>
     
-                <a href="{{ route('admin.index') }}#jobs" class="btn btn-success">Back to job</a>
+                <a href="{{ route('welcome.index') }}#jobs" class="btn btn-success">Back to Jobs</a>
             </div>
         </div>
     </div>
@@ -112,7 +67,7 @@
 
     <footer id="footer" class="footer">
 
-        <div class="container footer-top">
+        {{-- <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
@@ -171,7 +126,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
 
         <div class="container copyright text-center mt-4">
             <p>© <span>Copyright</span> <strong class="px-1 sitename">SiapKerja-Kelompok6</strong> <span>All Rights
