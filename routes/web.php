@@ -77,9 +77,12 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/superusers/create', [SuperUserController::class, 'create'])->name('superusers.create');
     Route::post('/superusers', [SuperUserController::class, 'store'])->name('superusers.store');
     Route::get('/superusers/{id}/edit', [SuperUserController::class, 'edit'])->name('superusers.edit');
-    Route::put('/superusers/{id}', [SuperUserController::class, 'update'])->name('superusers.update');
     Route::delete('/superusers/{id}', [SuperUserController::class, 'destroy'])->name('superusers.destroy');
+    Route::put('/superusers/{id}', [SuperUserController::class, 'update'])->name('superusers.update');
+    Route::resource('superusers', SuperUserController::class);
+
     // Jobs
+    Route::put('/superjobs/{id}', [SuperJobController::class, 'update'])->name('superjobs.update');
     Route::get('/superjobs', [SuperadminJobController::class, 'index'])->name('superjobs.index');
     Route::get('/superjobs/{id}/edit', [SuperadminJobController::class, 'edit'])->name('superjobs.edit');
     Route::put('/superjobs/{id}', [SuperadminJobController::class, 'update'])->name('superjobs.update');
@@ -89,6 +92,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/superapps/{id}/edit', [SuperadminAppController::class, 'edit'])->name('superapps.edit');
     Route::put('/superapps/{id}', [SuperadminAppController::class, 'update'])->name('superapps.update');
     Route::delete('/superapps/{id}', [SuperadminAppController::class, 'destroy'])->name('superapps.destroy');
+    
 });
 
 // Admin

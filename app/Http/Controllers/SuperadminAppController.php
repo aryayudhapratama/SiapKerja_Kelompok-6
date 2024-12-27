@@ -26,7 +26,7 @@ class SuperadminAppController extends Controller
      */
     public function create()
     {
-        //
+        // Method not needed in this case, can be removed or implemented later
     }
 
     /**
@@ -37,7 +37,7 @@ class SuperadminAppController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Method not needed in this case, can be removed or implemented later
     }
 
     /**
@@ -48,7 +48,9 @@ class SuperadminAppController extends Controller
      */
     public function show($id)
     {
-        //
+        // Return the applicant's data as JSON for use in the modal
+        $applicant = Applicant::findOrFail($id);
+        return response()->json($applicant);
     }
 
     /**
@@ -73,15 +75,19 @@ class SuperadminAppController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validate incoming data
         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'company' => 'required|string|max:255',
             'status' => 'required|in:pending,accepted,rejected',
         ]);
-
+    
+        // Find applicant and update
         $applicant = Applicant::findOrFail($id);
-        $applicant->update([
-            'status' => $request->status,
-        ]);
+        $applicant->update($request->only(['name', 'email', 'company', 'status']));
 
+        // Redirect with success message
         return redirect()->route('superapps.index')->with('success', 'Applicant status updated successfully!');
     }
 
@@ -93,9 +99,11 @@ class SuperadminAppController extends Controller
      */
     public function destroy($id)
     {
+        // Find the applicant and delete
         $applicant = Applicant::findOrFail($id);
         $applicant->delete();
 
+        // Redirect with success message
         return redirect()->route('superapps.index')->with('success', 'Applicant deleted successfully!');
     }
 }
