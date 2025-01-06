@@ -45,10 +45,10 @@
                     </li>
                     <li><a href="{{ route('userjobs.index') }}#jobs" class="nav-link active">Jobs</a></li>
                     <li><a href="{{ route('userjobs.index') }}#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li>
                         <a class="nav-link" href="{{ url('history') }}">History</a>
                     </li>
-                    <li><a href="#contact">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -56,12 +56,35 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-                <a class="btn-getstarted nav-link" href="{{ url('/') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <a class="btn-getstarted nav-link" href="#" onclick="logout(event)">Logout</a>
             </a>
         </div>
     </header>
     <!-- End Header -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function logout(event) {
+            event.preventDefault();
+
+            // SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will be logged out!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1bd602',
+                cancelButtonColor: '#d12a00',
+                confirmButtonText: 'Yes, log out!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit(); // Submit the logout form if confirmed
+                }
+            });
+        }
+    </script>
 
     <!-- Main Section -->
     <main class="main mb-5 pb-5" style="background: #dcffe4">
@@ -89,8 +112,16 @@
                     <p class="card-text"><strong>Category:</strong> {{ $job->category }}</p>
                     <p class="card-text"><strong>Posted on:</strong> {{ $job->created_at->format('d M Y') }}</p>
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('userjobs.index') }}" class="btn-getstarted">Back to Jobs</a>
-                        <a href="{{ route('userjobs.create', ['id' => $job->id]) }}" class="btn-getstartedd">Apply</a>
+                        <a href="{{ route('userjobs.index') }}" class="btn-getstarted mb-3"
+                            style="transition: background-color 0.3s ease; padding: 10px 20px; text-decoration: none; background-color: #b2b2b2; color: white; border-radius: 20px;"
+                            onmouseover="this.style.backgroundColor='#0056b3';"
+                            onmouseout="this.style.backgroundColor=' #b2b2b2';">
+                            Back to Jobs
+                        </a>
+                        <button id="apply-job-btn" class="btn btn-getstartedd mb-3" data-bs-toggle="modal"
+                            data-bs-target="#applyModal-{{ $job->id }}">
+                            Apply
+                        </button>
                     </div>
                 </div>
             </div>
@@ -98,6 +129,47 @@
     </main>
     <!-- End Main Section -->
 
+    <!-- Modal -->
+    <div class="modal fade" id="applyModal-{{ $job->id }}" tabindex="-1" aria-labelledby="applyModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="applyModalLabel">Submit Your Application</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form Apply -->
+                    <form action="{{ route('userjobs.store', ['id' => $job->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="job_id" value="{{ $job->id }}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ auth()->user()->name }}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="{{ auth()->user()->email }}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cv" class="form-label">Upload CV</label>
+                            <input type="file" class="form-control" id="cv" name="cv" accept=".pdf"
+                                required>
+                            <div class="form-text">Only PDF files are allowed.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <footer id="footer" class="footer">
 
@@ -105,11 +177,11 @@
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">iLanding</span>
+                        <span class="sitename">SiapKerja</span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>A108 Adam Street</p>
-                        <p>New York, NY 535022</p>
+                        <p>A108 Ketintang</p>
+                        <p>Surabaya, NY 535022</p>
                         <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
                         <p><strong>Email:</strong> <span>info@example.com</span></p>
                     </div>

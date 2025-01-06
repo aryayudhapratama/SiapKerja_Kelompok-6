@@ -41,8 +41,6 @@
             class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
             <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">SiapKerja</h1>
             </a>
 
@@ -53,6 +51,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('userjobs') }}#jobs">Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('userjobs') }}#about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('userjobs') }}#contact">Contact</a>
@@ -67,11 +68,34 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-                <a class="btn-getstarted nav-link" href="{{ url('/') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <a class="btn-getstarted nav-link" href="#" onclick="logout(event)">Logout</a>
             </a>
         </div>
     </header>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function logout(event) {
+            event.preventDefault();
+
+            // SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will be logged out!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#1bd602',
+                cancelButtonColor: '#d12a00',
+                confirmButtonText: 'Yes, log out!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit(); // Submit the logout form if confirmed
+                }
+            });
+        }
+    </script>
 
     <main class="main">
         <!-- Hero Section -->
@@ -105,10 +129,10 @@
                                     <a href="{{ asset('storage/' . $applicant->cv) }}" target="_blank">Download CV</a>
                                 </td>
                                 <td>
-                                    <span class="badge 
-                                        @if($applicant->status == 'pending') bg-warning 
-                                        @elseif($applicant->status == 'accepted') bg-success 
-                                        @else bg-danger 
+                                    <span class="badge
+                                        @if($applicant->status == 'pending') bg-warning
+                                        @elseif($applicant->status == 'accepted') bg-success
+                                        @else bg-danger
                                         @endif">
                                         {{ ucfirst($applicant->status) }}
                                     </span>
@@ -131,11 +155,11 @@
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">iLanding</span>
+                        <span class="sitename">SiapKerja</span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>A108 Adam Street</p>
-                        <p>New York, NY 535022</p>
+                        <p>A108 Ketintang</p>
+                        <p>Surabaya, NY 535022</p>
                         <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
                         <p><strong>Email:</strong> <span>info@example.com</span></p>
                     </div>
