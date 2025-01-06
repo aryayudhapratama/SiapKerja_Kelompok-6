@@ -87,65 +87,13 @@
 
         <!-- Hero Section -->
         <section id="hero" class="hero section">
-
-            {{-- <div class="container mt-5">
-                <h2>Job Listings</h2>
-        
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-        
-                <a href="{{ route('adminjobs.create') }}" class="btn btn-primary mb-3">Create Job</a>
-        
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Company Name</th>
-                            <th>Description</th>
-                            <th>Address</th>
-                            <th>Category</th>
-                            <th>Picture</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($jobs as $job)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $job->company_name }}</td>
-                                <td>{{ $job->description }}</td>
-                                <td>{{ $job->address }}</td>
-                                <td>{{ $job->category }}</td>
-                                <td>
-                                    @if($job->picture)
-                                        <img src="{{ asset('storage/' . $job->picture) }}" alt="Job Picture" style="width: 100px; height: auto;">
-                                    @else
-                                        No Image
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('adminjobs.edit', $job->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('adminjobs.destroy', $job->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this job?');">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div> --}}
             <div class="container mt-5">
                 <h2 class="mb-4">List of All Applicants</h2>
-        
-                @if(session('success'))
+
+                @if (session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-        
+
                 <div class="alert alert-info">Applicants List</div>
                 <table class="table table-striped">
                     <thead>
@@ -170,20 +118,30 @@
                                     <a href="{{ asset('storage/' . $applicant->cv) }}" target="_blank">Download CV</a>
                                 </td>
                                 <td>
-                                    <span class="badge 
-                                        @if($applicant->status == 'pending') bg-warning 
+                                    <span
+                                        class="badge 
+                                        @if ($applicant->status == 'pending') bg-warning 
                                         @elseif($applicant->status == 'accepted') bg-success 
-                                        @else bg-danger 
-                                        @endif">
+                                        @else bg-danger @endif">
                                         {{ ucfirst($applicant->status) }}
                                     </span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.applicant.edit', $applicant->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('admin.applicant.destroy', $applicant->id) }}" method="POST" style="display:inline-block;">
+                                    <button class="btn btn-warning btn-sm edit-btn" data-id="{{ $applicant->id }}"
+                                        data-name="{{ $applicant->name }}" data-email="{{ $applicant->email }}"
+                                        data-company="{{ $applicant->company }}"
+                                        data-status="{{ $applicant->status }}">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $applicant->id }}">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                    <form id="delete-form-{{ $applicant->id }}"
+                                        action="{{ route('admin.applicant.destroy', $applicant->id) }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -195,8 +153,52 @@
                     </tbody>
                 </table>
             </div>
-
         </section><!-- /Hero Section -->
+        {{-- Edit --}}
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="editForm" action="" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Applicant Status</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="edit-id" name="id">
+                            <div class="mb-3">
+                                <label for="edit-name" class="form-label">Name:</label>
+                                <input type="text" id="edit-name" name="name" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-email" class="form-label">Email:</label>
+                                <input type="email" id="edit-email" name="email" class="form-control" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-company" class="form-label">Company:</label>
+                                <input type="text" id="edit-company" name="company" class="form-control"
+                                    readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-status" class="form-label">Status:</label>
+                                <select id="edit-status" name="status" class="form-select" required>
+                                    <option value="pending">Pending</option>
+                                    <option value="accepted">Accepted</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer id="footer" class="footer">
@@ -284,6 +286,48 @@
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const applicantId = this.dataset.id;
+                const actionUrl = `/applicants/${applicantId}`; // Sesuaikan endpoint dengan 'applicants'
+                document.getElementById('editForm').action = actionUrl;
+                document.getElementById('edit-id').value = this.dataset.id;
+                document.getElementById('edit-name').value = this.dataset.name;
+                document.getElementById('edit-email').value = this.dataset.email;
+                document.getElementById('edit-company').value = this.dataset.company;
+                document.getElementById('edit-status').value = this.dataset.status;
+
+                const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                editModal.show();
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id; // Mengambil ID dari atribut data-id
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.getElementById(`delete-form-${id}`);
+                        if (form) {
+                            form.submit(); // Mengirimkan form delete
+                        } else {
+                            console.error(`Form with ID delete-form-${id} not found.`);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

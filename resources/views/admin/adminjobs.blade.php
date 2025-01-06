@@ -84,21 +84,22 @@
     </header>
 
     <main class="main">
-
         <!-- Hero Section -->
         <section id="hero" class="hero section">
-
             <div class="container mt-5">
                 <h2>Job Listings</h2>
-        
-                @if(session('success'))
+
+                @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
-        
-                <a href="{{ route('adminjobs.create') }}" class="btn btn-primary mb-3">Create Job</a>
-        
+
+                {{-- <a href="{{ route('adminjobs.create') }}" class="btn btn-primary mb-3">Create Job</a> --}}
+                <div class="header-right ms-auto">
+                    <button id="add-user-btn" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                        data-bs-target="#addModal">Create Job</button>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -112,7 +113,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($jobs as $job)
+                        @foreach ($jobs as $job)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $job->company_name }}</td>
@@ -120,18 +121,34 @@
                                 <td>{{ $job->address }}</td>
                                 <td>{{ $job->category }}</td>
                                 <td>
-                                    @if($job->picture)
-                                        <img src="{{ asset('storage/' . $job->picture) }}" alt="Job Picture" style="width: 100px; height: auto;">
+                                    @if ($job->picture)
+                                        <img src="{{ asset('storage/' . $job->picture) }}" alt="Job Picture"
+                                            style="width: 100px; height: auto;">
                                     @else
                                         No Image
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('adminjobs.edit', $job->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('adminjobs.destroy', $job->id) }}" method="POST" style="display:inline;">
+                                    <!-- Tombol Edit -->
+                                    <button class="btn btn-warning btn-sm edit-btn" data-id="{{ $job->id }}"
+                                        data-company_name="{{ $job->company_name }}"
+                                        data-description="{{ $job->description }}" data-address="{{ $job->address }}"
+                                        data-category="{{ $job->category }}"
+                                        data-picture="{{ asset('storage/' . $job->picture) }}">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+
+                                    <!-- Tombol Delete -->
+                                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $job->id }}">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+
+                                    <!-- Form Delete -->
+                                    <form id="delete-form-{{ $job->id }}"
+                                        action="{{ route('adminjobs.destroy', $job->id) }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this job?');">Delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -139,8 +156,103 @@
                     </tbody>
                 </table>
             </div>
+        </section>
+        <!-- /Hero Section -->
+        <!-- Add User Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('adminjobs.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Add Jobs</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
 
-        </section><!-- /Hero Section -->
+                            <div class="mb-3">
+                                <label for="company_name" class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="company_name" name="company_name"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <input type="text" class="form-control" id="category" name="category" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="picture" class="form-label">Picture</label>
+                                <input type="file" class="form-control" id="picture" name="picture">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- Edit User Modal --}}
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="editForm" action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Job</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="edit-id" name="id">
+                            <div class="mb-3">
+                                <label for="edit-company_name" class="form-label">Company Name:</label>
+                                <input type="text" id="edit-company_name" name="company_name"
+                                    class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-description" class="form-label">Description:</label>
+                                <textarea id="edit-description" name="description" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-address" class="form-label">Address:</label>
+                                <input type="text" id="edit-address" name="address" class="form-control"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-category" class="form-label">Category:</label>
+                                <input type="text" id="edit-category" name="category" class="form-control"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-picture" class="form-label">Picture:</label>
+                                <input type="file" id="edit-picture" name="picture" class="form-control">
+                                <small class="text-muted">Leave blank if you don't want to change the picture.</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-picture-preview" class="form-label">Current Picture:</label>
+                                <img id="edit-picture-preview" src="#" alt="Picture Preview"
+                                    style="width: 100%; height: auto; display: none;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -227,6 +339,65 @@
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Mengambil data dari atribut data-* tombol edit
+                const jobId = this.dataset.id;
+                const companyName = this.dataset.company_name;
+                const description = this.dataset.description;
+                const address = this.dataset.address;
+                const category = this.dataset.category;
+                const pictureUrl = this.dataset.picture;
+
+                // Mengatur action URL form edit
+                const actionUrl = `/adminjobs/${jobId}`; // Pastikan route ini sesuai
+                document.getElementById('editForm').action = actionUrl;
+
+                // Mengisi nilai input pada modal edit
+                document.getElementById('edit-id').value = jobId;
+                document.getElementById('edit-company_name').value = companyName;
+                document.getElementById('edit-description').value = description;
+                document.getElementById('edit-address').value = address;
+                document.getElementById('edit-category').value = category;
+
+                // Menampilkan gambar jika ada
+                const picturePreview = document.getElementById('edit-picture-preview');
+                if (pictureUrl) {
+                    picturePreview.src = pictureUrl;
+                    picturePreview.style.display = 'block';
+                } else {
+                    picturePreview.style.display = 'none';
+                }
+
+                // Menampilkan modal edit
+                const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                editModal.show();
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${id}`).submit();
+                    }
+                });
+            });
+        });
+    </script>
+
 
 </body>
 

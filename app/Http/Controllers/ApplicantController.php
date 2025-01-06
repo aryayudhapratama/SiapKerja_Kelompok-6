@@ -62,7 +62,7 @@ class ApplicantController extends Controller
     public function edit($id)
     {
         $applicant = Applicant::findOrFail($id);
-        
+
         return view('admin.edit_applicant', compact('applicant'));
     }
 
@@ -98,6 +98,6 @@ class ApplicantController extends Controller
         $applicant = Applicant::findOrFail($id);
         $applicant->delete();
 
-        return redirect()->route('applicants.index')->with('success', 'Applicant deleted successfully!');
+        return redirect()->back()->with('success', 'Applicant deleted successfully.');
     }
 }

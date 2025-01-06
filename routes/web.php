@@ -82,7 +82,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::resource('superusers', SuperUserController::class);
 
     // Jobs
-    Route::put('/superjobs/{id}', [SuperJobController::class, 'update'])->name('superjobs.update');
+    Route::put('/superjobs/{id}', [SuperadminJobController::class, 'update'])->name('superjobs.update');
     Route::get('/superjobs', [SuperadminJobController::class, 'index'])->name('superjobs.index');
     Route::get('/superjobs/{id}/edit', [SuperadminJobController::class, 'edit'])->name('superjobs.edit');
     Route::put('/superjobs/{id}', [SuperadminJobController::class, 'update'])->name('superjobs.update');
