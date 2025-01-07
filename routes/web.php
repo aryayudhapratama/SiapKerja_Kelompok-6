@@ -72,6 +72,12 @@ require __DIR__.'/auth.php';
 
 // SuperAdmin
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
+    // Dashboard
+    Route::get('/superadmin', [SuperAdminController::class, 'index'])->name('superadmin.index');
+    Route::get('/superadmin/jobs', [SuperAdminController::class, 'jobs'])->name('superadmin.jobs');
+    Route::get('/superadmin/users', [SuperAdminController::class, 'users'])->name('superadmin.users');
+    Route::get('/superadmin/applicants', [SuperAdminController::class, 'applicants'])->name('superadmin.applicants');
+
     // User
     Route::get('/superusers', [SuperUserController::class, 'index'])->name('superusers.index');
     Route::get('/superusers/create', [SuperUserController::class, 'create'])->name('superusers.create');

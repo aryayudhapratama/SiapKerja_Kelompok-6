@@ -1,56 +1,79 @@
 @extends('layouts.superadmin')
+<style>
+.table-responsive {
+    scrollbar-width: thin; 
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #4caf50; 
+    border-radius: 4px; 
+    border: 2px solid #e8f5e9;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #e8f5e9;
+    border-radius: 4px;
+}
+
+</style>
 
 @section('content')
-<div class="container" style="margin-top:4%">
+<div class="container" style="margin-top:2%">
     <header id="header" class="header">
-        <div class="header-menu">
-            <div class="header-right ms-auto">
-                <button id="add-user-btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add User</button>
-            </div>
-        </div>
+       
     </header>
-    <div class="table-responsive">
-    <div class="content mt-1">
-        <table class="table table-hover table-striped align-middle">
-        <thead class="table-success">
-                <tr style="text-align:center">
-                    <th style="text-align:center">ID</th>
-                    <th style="text-align:center">Name</th>
-                    <th style="text-align:center">Email</th>
-                    <th style="text-align:center">Role</th>
-                    <th style="text-align:center">Actions</th>
+    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+    <table class="table table-hover table-striped align-middle">
+        <thead class="table-success" style="position: sticky; top: 0; z-index: 1020;">
+            <tr>
+                <th style="text-align: center; vertical-align: middle;">ID</th>
+                <th style="text-align: center; vertical-align: middle;">Name</th>
+                <th style="text-align: center; vertical-align: middle;">Email</th>
+                <th style="text-align: center; vertical-align: middle;">Role</th>
+                <th style="text-align: center; vertical-align: middle;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($users as $user)
+                <tr>
+                    <td style="text-align: center;">{{ $user->id }}</td>
+                    <td style="text-align: center;">{{ $user->name }}</td>
+                    <td style="text-align: center;">{{ $user->email }}</td>
+                    <td style="text-align: center;">{{ $user->role }}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm edit-btn" 
+                            data-id="{{ $user->id }}" 
+                            data-name="{{ $user->name }}" 
+                            data-email="{{ $user->email }}" 
+                            data-role="{{ $user->role }}">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </button>
+                        
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->id }}">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                        <form id="delete-form-{{ $user->id }}" action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($users as $user)
-                    <tr>
-                        <td style="text-align:center">{{ $user->id }}</td>
-                        <td style="text-align:center">{{ $user->name }}</td>
-                        <td style="text-align:center">{{ $user->email }}</td>
-                        <td style="text-align:center">{{ $user->role }}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm edit-btn" 
-                                data-id="{{ $user->id }}" 
-                                data-name="{{ $user->name }}" 
-                                data-email="{{ $user->email }}" 
-                                data-role="{{ $user->role }}">
-                                <i class="bi bi-pencil-square"></i> Edit
-                            </button>
-                            
-                            <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $user->id }}">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
-                            <form id="delete-form-{{ $user->id }}" action="{{ route('superusers.destroy', $user->id) }}" method="POST" style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
 </div>
+
+<div class="d-flex justify-content-end mb-3" style="margin-top:2%">
+        <button id="add-user-btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">
+            Add User <i class="bi bi-plus-circle"></i>
+        </button>
+    </div>
+
 <!-- Add User Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -126,7 +149,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-password" class="form-label">New Password (Leave blank to keep unchanged):</label>
+                        <label for="edit-password" class="form-label">New Password:</label>
                         <input type="password" id="edit-password" name="password" class="form-control">
                     </div>
                     <div class="mb-3">
@@ -180,4 +203,5 @@ document.querySelectorAll('.edit-btn').forEach(button => {
             });
         });
 </script>
+
 @endsection
