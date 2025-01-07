@@ -1,10 +1,31 @@
 @extends('layouts.superadmin')
+<style>
+.table-responsive {
+    scrollbar-width: thin; 
+}
 
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #4caf50; 
+    border-radius: 4px; 
+    border: 2px solid #e8f5e9;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #e8f5e9;
+    border-radius: 4px;
+}
+
+</style>
 @section('content')
 <div class="container" style="margin-top:6%">
     <div class="table-responsive">
         <table class="table table-hover table-striped align-middle">
-            <thead class="table-success">
+        <thead class="table-success" style="position: sticky; top: 0; z-index: 1020;">
                 <tr>
                     <th class="text-center">No</th>
                     <th>Company Name</th>
@@ -17,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($jobs as $job)
+                @forelse($jobs as $job)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $job->company_name }}</td>
@@ -50,7 +71,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                <tr>
+                    <td colspan="8" class="text-center">No Jobs found.</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
@@ -192,4 +217,5 @@
         });
     });
 </script>
+
 @endsection

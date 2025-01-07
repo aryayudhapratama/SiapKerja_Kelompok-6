@@ -1,11 +1,33 @@
 @extends('layouts.superadmin')
+<style>
+.table-responsive {
+    scrollbar-width: thin; 
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #4caf50; 
+    border-radius: 4px; 
+    border: 2px solid #e8f5e9;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #e8f5e9;
+    border-radius: 4px;
+}
+
+</style>
 @section('content')
 <!-- Content -->
 <div class="container" style="margin-top:6%">
 
     <div class="table-responsive">
         <table class="table table-hover table-striped align-middle">
-        <thead class="table-success">
+        <thead class="table-success" style="position: sticky; top: 0; z-index: 1020;">
             <tr>
                 <th style="text-align:center">No</th>
                 <th style="text-align:center">Name</th>
@@ -196,5 +218,6 @@
         });
     });
 </script>
+
 
 @endsection
