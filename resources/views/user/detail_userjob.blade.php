@@ -45,7 +45,7 @@
                     </li>
                     <li><a href="{{ route('userjobs.index') }}#jobs" class="nav-link active">Jobs</a></li>
                     <li><a href="{{ route('userjobs.index') }}#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{{ route('userjobs.index') }}#contact">Contact</a></li>
                     <li>
                         <a class="nav-link" href="{{ url('history') }}">History</a>
                     </li>
@@ -87,46 +87,44 @@
     </script>
 
     <!-- Main Section -->
-    <main class="main mb-5 pb-5" style="background: #dcffe4">
-        <!-- Page Title -->
-        <div class="page-title" style="background: #dcffe4">
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section">
             <div class="container">
-                <h1>Job Details</h1>
-            </div>
-        </div><!-- End Page Title -->
+                <div class="card">
+                    @if ($job->picture)
+                        <img src="{{ asset('storage/' . $job->picture) }}" class="card-img-top"
+                            alt="{{ $job->company_name }}" style="height: 500px; object-fit: cover;">
+                    @else
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image"
+                            style="height: 300px; object-fit: cover;">
+                    @endif
 
-        <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-            <div class="card shadow-sm" style="max-width: 100%; width: 100%;">
-                @if ($job->picture)
-                    <img src="{{ asset('storage/' . $job->picture) }}" class="card-img-top"
-                        alt="{{ $job->company_name }}" style="height: 500px; object-fit: cover;">
-                @else
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image"
-                        style="height: 500px; object-fit: cover;">
-                @endif
-
-                <div class="card-body">
-                    <h3 class="card-title">{{ $job->company_name }}</h3>
-                    <p class="card-text"><strong>Description:</strong> {{ $job->description }}</p>
-                    <p class="card-text"><strong>Address:</strong> {{ $job->address }}</p>
-                    <p class="card-text"><strong>Category:</strong> {{ $job->category }}</p>
-                    <p class="card-text"><strong>Posted on:</strong> {{ $job->created_at->format('d M Y') }}</p>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ route('userjobs.index') }}" class="btn-getstarted mb-3"
-                            style="transition: background-color 0.3s ease; padding: 10px 20px; text-decoration: none; background-color: #b2b2b2; color: white; border-radius: 20px;"
-                            onmouseover="this.style.backgroundColor='#0056b3';"
-                            onmouseout="this.style.backgroundColor=' #b2b2b2';">
-                            Back to Jobs
-                        </a>
-                        <button id="apply-job-btn" class="btn btn-getstartedd mb-3" data-bs-toggle="modal"
-                            data-bs-target="#applyModal-{{ $job->id }}">
-                            Apply
-                        </button>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ $job->company_name }}</h3>
+                        <p class="card-text"><strong>Description:</strong> {{ $job->description }}</p>
+                        <p class="card-text"><strong>Address:</strong> {{ $job->address }}</p>
+                        <p class="card-text"><strong>Category:</strong> {{ $job->category }}</p>
+                        <p class="card-text"><strong>Posted on:</strong> {{ $job->created_at->format('d M Y') }}</p>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ route('userjobs.index') }}" class="btn-getstarted mb-3"
+                                style="transition: background-color 0.3s ease; padding: 10px 20px; text-decoration: none; background-color: #b2b2b2; color: white; border-radius: 20px;"
+                                onmouseover="this.style.backgroundColor='#0056b3';"
+                                onmouseout="this.style.backgroundColor=' #b2b2b2';">
+                                Back to Jobs
+                            </a>
+                            <button id="apply-job-btn" class="btn btn-getstartedd mb-3" data-bs-toggle="modal"
+                                data-bs-target="#applyModal-{{ $job->id }}">
+                                Apply
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </section><!-- /Hero Section -->
     </main>
+    
     <!-- End Main Section -->
 
     <!-- Modal -->
