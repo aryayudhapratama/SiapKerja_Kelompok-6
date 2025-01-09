@@ -89,13 +89,13 @@
                             </div>
 
                             <h1 class="mb-4">
-                                Siap Kerja<br>
-                                Perintis Bukan Pewaris <br>
-                                <span class="accent-text">Cari Jalan Ninjamu</span>
+                                Temukan Karirmu<br>
+                                Raih Suksesmu!<br>
+                                <span class="accent-text">Buka Pintu Karirmu</span>
                             </h1>
 
                             <p class="mb-4 mb-md-5">
-                                SiapKerja adalah platform yang mempermudah pencari kerja menemukan lowongan dan perusahaan mencari kandidat pekerja terbaik.
+                                SiapKerja adalah platform inovatif yang dirancang untuk menjembatani pencari kerja dengan peluang karir terbaik. Kami memahami bahwa setiap individu memiliki potensi unik untuk berkembang dan meraih kesuksesan.
                             </p>
 
                             <div class="hero-buttons">
@@ -151,7 +151,7 @@
                                 <i class="bi bi-award"></i>
                             </div>
                             <div class="stat-content">
-                                <h4>6x Masuk Penjara</h4>
+                                <h4>Top Salary</h4>
                                 <p class="mb-0">Vestibulum ante ipsum</p>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>Available Jobs</h2>
-                <p>Cari jalan ninjamu dengan memilih daftar pekerjaan dibawah ini :</p>
+                <p>Temukan karir terbaikmu dengan menjelajahi daftar pekerjaan di bawah ini:</p>
             </div><!-- End Section Title -->
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -208,10 +208,9 @@
                     <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
                         <span class="about-meta">MORE ABOUT US</span>
                         <h2 class="about-title">Website SiapKerja</h2>
-                        <p class="about-description">SiapKerja adalah platform inovatif yang menghubungkan pencari kerja dengan perusahaan, memudahkan proses pencarian dan perekrutan. 
-                            Kami memahami tantangan yang dihadapi oleh kedua belah pihak, baik pencari kerja yang ingin menemukan peluang karir yang sesuai, maupun perusahaan yang mencari kandidat terbaik untuk posisi yang tersedia. 
-                            Dengan fitur pencarian lowongan yang mudah digunakan dan sistem pendaftaran yang efisien, SiapKerja memberikan pengalaman yang lebih cepat dan lebih baik dalam menemukan pekerjaan dan talent yang tepat. 
-                            Kami berkomitmen untuk menciptakan hubungan yang saling menguntungkan dan membantu membangun karir serta tim yang sukses.
+                        <p class="about-description">SiapKerja adalah platform inovatif yang dirancang untuk menjembatani pencari kerja dengan peluang karir terbaik. Kami memahami bahwa setiap individu memiliki potensi unik untuk berkembang dan meraih kesuksesan. Oleh karena itu, kami hadir untuk membantu kamu menemukan pekerjaan impian yang sesuai dengan minat, keahlian, dan tujuanmu.
+
+                            Melalui berbagai fitur unggulan, SiapKerja tidak hanya mempermudah proses pencarian kerja, tetapi juga memberikan solusi bagi perusahaan dalam menemukan talenta terbaik yang sesuai dengan kebutuhan mereka. Dengan dukungan teknologi terkini, kami berkomitmen untuk menciptakan pengalaman yang cepat, efektif, dan dapat diandalkan bagi semua pengguna.
                         </p>
 
                         <div class="row feature-list-wrapper">
@@ -340,8 +339,8 @@
                                 </div>
                                 <div class="content">
                                     <h4>Our Location</h4>
-                                    <p>A108 Adam Street</p>
-                                    <p>New York, NY 535022</p>
+                                    <p>A108 Ketintang</p>
+                                    <p>Surabaya, NY 535022</p>
                                 </div>
                             </div>
 
@@ -426,11 +425,11 @@
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">iLanding</span>
+                        <span class="sitename">SiapKerja</span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>A108 Adam Street</p>
-                        <p>New York, NY 535022</p>
+                        <p>A108 Ketintang</p>
+                        <p>Surabaya, NY 535022</p>
                         <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
                         <p><strong>Email:</strong> <span>info@example.com</span></p>
                     </div>

@@ -35,39 +35,64 @@
 </head>
 
 <body class="index-page">
+    <!-- Header -->
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div
+            class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
+            <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+                <h1 class="sitename">SiapKerja</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li>
+                        <a class="nav-link active" href="{{ route('welcome.index') }}#hero">Dashboard</a>
+                    </li>
+                    <li><a href="{{ route('welcome.index') }}#jobs">Jobs</a></li>
+                    <li><a href="{{ route('welcome.index') }}#about">About</a></li>
+                    <li><a href="{{ route('welcome.index') }}#contact">Contact</a></li>
+                    <li><a class="btn-getstarted nav-link" href="{{ route('login') }}"
+                            class="text-sm text-gray-700 dark:text-gray-500 underline">Login</a></li>
+                    <li><a class="btn-getstarteds nav-link" href="{{ route('register') }}"
+                            class="text-sm text-gray-700 dark:text-gray-500 underline">Register</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
 
     <main class="main">
-
         <!-- Hero Section -->
         <section id="hero" class="hero section">
-
             <div class="container">
-        <div class="card">
-            @if($jobs->picture)
-                <img src="{{ asset('storage/' . $jobs->picture) }}" class="card-img-top" alt="{{ $jobs->company_name }}" style="height: 800px; object-fit: cover;">
-            @else
-                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image" style="height: 300px; object-fit: cover;">
-            @endif
-    
-            <div class="card-body">
-                <h3 class="card-title">{{ $jobs->company_name }}</h3>
-                <p class="card-text"><strong>Description:</strong> {{ $jobs->description }}</p>
-                <p class="card-text"><strong>Address:</strong> {{ $jobs->address }}</p>
-                <p class="card-text"><strong>Category:</strong> {{ $jobs->category }}</p>
-                <p class="card-text"><strong>Posted on:</strong> {{ $jobs->created_at->format('d M Y') }}</p>
-    
-                <a href="{{ route('welcome.index') }}#jobs" class="btn btn-success">Back to Jobs</a>
+                <div class="card">
+                    @if ($jobs->picture)
+                        <img src="{{ asset('storage/' . $jobs->picture) }}" class="card-img-top"
+                            alt="{{ $jobs->company_name }}" style="height: 500px; object-fit: cover;">
+                    @else
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image"
+                            style="height: 300px; object-fit: cover;">
+                    @endif
+
+                    <div class="card-body">
+                        <h3 class="card-title">{{ $jobs->company_name }}</h3>
+                        <p class="card-text"><strong>Description:</strong> {{ $jobs->description }}</p>
+                        <p class="card-text"><strong>Address:</strong> {{ $jobs->address }}</p>
+                        <p class="card-text"><strong>Category:</strong> {{ $jobs->category }}</p>
+                        <p class="card-text"><strong>Posted on:</strong> {{ $jobs->created_at->format('d M Y') }}</p>
+
+                        <a href="{{ route('welcome.index') }}#jobs" class="btn btn-success">Back to job</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
         </section><!-- /Hero Section -->
     </main>
 
     <footer id="footer" class="footer">
 
-        {{-- <div class="container footer-top">
+        <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
@@ -126,7 +151,7 @@
                 </div>
 
             </div>
-        </div> --}}
+        </div>
 
         <div class="container copyright text-center mt-4">
             <p>© <span>Copyright</span> <strong class="px-1 sitename">SiapKerja-Kelompok6</strong> <span>All Rights
